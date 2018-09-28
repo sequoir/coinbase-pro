@@ -1,8 +1,8 @@
 require 'spec_helper'
 
-describe Coinbase::Exchange do
+describe Coinbase::Pro do
   before :all do
-    @obj = Coinbase::Exchange::APIObject.new('text' => 'test 123',
+    @obj = Coinbase::Pro::APIObject.new('text' => 'test 123',
                                              'decimal' => '123456.789',
                                              'btc' => '฿ 1.23456789',
                                              'usd' => '$ 1,234,567.89',

@@ -1,5 +1,5 @@
 module Coinbase
-  module Exchange
+  module Pro
     # Net-HTTP adapter
     class NetHTTPClient < APIClient
       def initialize(api_key = '', api_secret = '', api_pass = '', options = {})

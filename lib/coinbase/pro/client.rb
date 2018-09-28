@@ -1,5 +1,5 @@
 module Coinbase
-  module Exchange
+  module Pro
     class Client < NetHTTPClient
     end
 

@@ -1,5 +1,5 @@
 module Coinbase
-  module Exchange
+  module Pro
     # Encapsulate data for an API response
     class APIResponse
       attr_reader :received_at

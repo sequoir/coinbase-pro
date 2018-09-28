@@ -4,17 +4,17 @@ __Note:__ This gem is now being maintained by Vertbase (https://www.vertpage.com
 
 ## REST Client
 
-We provide an exchange client that is a thin wrapper over the exchange API.  The purpose of this Readme is to provide context for using the gem effectively.  For a detailed overview of the information that's available through the API, we recommend consulting the official documentation.
-* https://docs.gdax.com/#api
+We provide an pro client that is a thin wrapper over the pro API.  The purpose of this Readme is to provide context for using the gem effectively.  For a detailed overview of the information that's available through the API, we recommend consulting the official documentation.
+* https://developers.coinbase.com/api/v2
 
 We provide a synchronous and asynchronous client.  The only functional difference between the two clients is that the asynchronous client must be started inside the Eventmachine reactor loop.
 
 **Synchronous Client**
 
 ```ruby
-require 'coinbase/exchange'
+require 'coinbase/pro'
 
-rest_api = Coinbase::Exchange::Client.new(api_key, api_secret, api_pass)
+rest_api = Coinbase::Pro::Client.new(api_key, api_secret, api_pass)
 while true
   sleep 10
   rest_api.last_trade(product_id: "BTC-GBP") do |resp|
@@ -26,10 +26,10 @@ end
 **Asynchronous Client**
 
 ```ruby
-require 'coinbase/exchange'
+require 'coinbase/pro'
 require 'eventmachine'
 
-rest_api = Coinbase::Exchange::AsyncClient.new(api_key, api_secret, api_pass)
+rest_api = Coinbase::Pro::AsyncClient.new(api_key, api_secret, api_pass)
 EM.run {
   EM.add_periodic_timer(10) {
     rest_api.last_trade(product_id: "BTC-GBP") do |resp|
@@ -44,7 +44,7 @@ EM.run {
 ### Installation
 
 ```
-$ gem install coinbase-exchange
+$ gem install coinbase-pro
 ```
 
 ### Initialization
@@ -53,11 +53,11 @@ To initialize the client, simply pass in an API Key, API Secret, and API Passphr
 * https://gdax.com/settings
 
 ```ruby
-rest_api = Coinbase::Exchange::Client.new(api_key, api_secret, api_pass)
+rest_api = Coinbase::Pro::Client.new(api_key, api_secret, api_pass)
 ```
 
 ```ruby
-rest_api = Coinbase::Exchange::AsyncClient.new(api_key, api_secret, api_pass)
+rest_api = Coinbase::Pro::AsyncClient.new(api_key, api_secret, api_pass)
 ```
 
 **Default Product**
@@ -65,7 +65,7 @@ rest_api = Coinbase::Exchange::AsyncClient.new(api_key, api_secret, api_pass)
 GDAX supports trading bitcoin in several currencies.  If you wish to trade a different currency, you can specify an alternative default currency.
 
 ```ruby
-gbp_client = Coinbase::Exchange::Client.new(api_key, api_secret, api_pass,
+gbp_client = Coinbase::Pro::Client.new(api_key, api_secret, api_pass,
                                             product_id: "BTC-GBP")
 ```
 
@@ -74,7 +74,7 @@ gbp_client = Coinbase::Exchange::Client.new(api_key, api_secret, api_pass,
 You can initialize a connection to the sandbox by specifying an alternative api endpoint.
 
 ```ruby
-sandbox = Coinbase::Exchange::Client.new(api_key, api_secret, api_pass,
+sandbox = Coinbase::Pro::Client.new(api_key, api_secret, api_pass,
                                           api_url: "https://api-public.sandbox.gdax.com")
 ```
 
@@ -108,7 +108,7 @@ end
 
 ### Return Values
 
-Data format is a sensitive issue when writing financial software.  The exchange API represents monetary data in string format.  This is a good intermediary data format for the user to apply their own data format, but is not especially useful on its own.
+Data format is a sensitive issue when writing financial software.  The pro API represents monetary data in string format.  This is a good intermediary data format for the user to apply their own data format, but is not especially useful on its own.
 
 For representing monetary data in ruby, we recommend using the [BigDecimal] (http://ruby-doc.org/stdlib-2.1.1/libdoc/bigdecimal/rdoc/BigDecimal.html) library.  If you access data by calling response items as though they were methods on the response itself.  If you access data this way, any numerical data will be converted to BigDecimal format.
 
@@ -184,7 +184,7 @@ end
 
 **orderbook**
 
-Downloads a list of all open orders on our exchange.
+Downloads a list of all open orders on our pro.
 
 ```ruby
 rest_api.orderbook do |resp|
@@ -390,6 +390,14 @@ rest_api.withdraw(wallet_id, 10) do |resp|
 end
 ```
 
+**crypto_withdrawal**
+ Withdraw money to a crypto address
+ ```ruby
+rest_api.crypto_withdrawal(10, 'BTC', 'a365117a-8e67-4de2-9655-21ec5cf2211e') do |resp|
+  p "Withdrew 10 BTC to BTC wallet with address a365117a-8e67-4de2-9655-21ec5cf2211e"
+end
+```
+
 ### Other
 
 **server_time**
@@ -413,16 +421,16 @@ We provide a websocket interface in the gem for convenience.  This is typically 
 Please consider setting the keepalive flag to true when initializing the websocket.  This will cause the websocket to proactively refresh the connection whenever it closes.
 
 ```ruby
-websocket = Coinbase::Exchange::Websocket.new(keepalive: true)
+websocket = Coinbase::Pro::Websocket.new(keepalive: true)
 ```
 
 Before starting the websocket, you should hook into whatever messages you're interested in by passing a block to the corresponding method.  The methods you can use for access are open, match, change, done, and error.  Additionally, you can use message to run a block on every websocket event.
 
 ```ruby
-require 'coinbase/exchange'
+require 'coinbase/pro'
 require 'eventmachine'
 
-websocket = Coinbase::Exchange::Websocket.new(product_id: 'BTC-GBP',
+websocket = Coinbase::Pro::Websocket.new(product_id: 'BTC-GBP',
                                               keepalive: true)
 websocket.match do |resp|
   p "Spot Rate: £ %.2f" % resp.price
@@ -444,9 +452,9 @@ end
 If started outside the reactor loop, the websocket client will use a very basic Eventmachine handler.
 
 ```ruby
-require 'coinbase/exchange'
+require 'coinbase/pro'
 
-websocket = Coinbase::Exchange::Websocket.new(product_id: 'BTC-GBP')
+websocket = Coinbase::Pro::Websocket.new(product_id: 'BTC-GBP')
 websocket.match do |resp|
   p "Spot Rate: £ %.2f" % resp.price
 end
