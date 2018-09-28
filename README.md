@@ -50,7 +50,7 @@ $ gem install coinbase-pro
 ### Initialization
 
 To initialize the client, simply pass in an API Key, API Secret, and API Passphrase which you generate on the web interface:
-* https://gdax.com/settings
+* https://pro.coinbase.com/profile/api
 
 ```ruby
 rest_api = Coinbase::Pro::Client.new(api_key, api_secret, api_pass)
@@ -62,7 +62,7 @@ rest_api = Coinbase::Pro::AsyncClient.new(api_key, api_secret, api_pass)
 
 **Default Product**
 
-GDAX supports trading bitcoin in several currencies.  If you wish to trade a different currency, you can specify an alternative default currency.
+Coinbase Pro supports trading bitcoin in several currencies.  If you wish to trade a different currency, you can specify an alternative default currency.
 
 ```ruby
 gbp_client = Coinbase::Pro::Client.new(api_key, api_secret, api_pass,
