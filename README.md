@@ -1,6 +1,6 @@
 # Coinbase Pro Gem
 
-__Note:__ This gem is now being maintained by Vertbase (https://www.vertpage.com).
+__Note:__ This gem is now being maintained by Vertbase (https://www.vertbase.com).
 
 ## REST Client
 
