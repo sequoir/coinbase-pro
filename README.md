@@ -75,7 +75,7 @@ You can initialize a connection to the sandbox by specifying an alternative api 
 
 ```ruby
 sandbox = Coinbase::Pro::Client.new(api_key, api_secret, api_pass,
-                                          api_url: "https://api-public.sandbox.gdax.com")
+                                          api_url: "https://public.sandbox.pro.coinbase.com")
 ```
 
 ### Methods
@@ -148,7 +148,7 @@ end
 
 ## Endpoints
 
-### [Market Data] (https://docs.gdax.com/#market-data)
+### [Market Data] (https://docs.pro.coinbase.com/#market-data)
 
 Coinbase supports trading in multiple currencies.  When interacting with market data, you can get information about a product other than your default by setting the product_id parameter.
 
@@ -242,7 +242,7 @@ rest_api.daily_stats do |resp|
 end
 ```
 
-### [Accounts] (https://docs.gdax.com/#accounts)
+### [Accounts] (https://docs.pro.coinbase.com/#accounts)
 
 **accounts**
 
@@ -286,7 +286,7 @@ rest_api.account_holds(account_id) do |resp|
 end
 ```
 
-### [Orders] (https://docs.gdax.com/#orders)
+### [Orders] (https://docs.pro.coinbase.com/#orders)
 
 **bid**
 
@@ -368,7 +368,7 @@ rest_api.fills do |resp|
 end
 ```
 
-### [Transfers] (https://docs.gdax.com/#transfer-funds)
+### [Transfers] (https://docs.pro.coinbase.com/#transfer-funds)
 
 **deposit**
 
@@ -414,7 +414,7 @@ end
 
 We recommend reading the official websocket documentation before proceeding.
 
-* https://docs.gdax.com/#websocket-feed
+* https://docs.pro.coinbase.com/#websocket-feed
 
 We provide a websocket interface in the gem for convenience.  This is typically used to build a real-time orderbook, although it can also be used for simpler purposes such as tracking the market rate, or tracking when your orders fill.  Like the asynchronous client, this depends Eventmachine for asynchronous processing.
 
