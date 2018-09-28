@@ -1,7 +1,6 @@
-# GDAX Ruby library
+# Coinbase Pro Gem
 
-__Note:__ This library isn't actively maintained.
-Please refer to the [Node.js client library](https://github.com/coinbase/gdax-node) for an up-to-date client implementation.
+__Note:__ This gem is now being maintained by Vertbase (https://www.vertpage.com).
 
 ## REST Client
 
