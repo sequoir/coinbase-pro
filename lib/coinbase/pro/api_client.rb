@@ -277,7 +277,23 @@ module Coinbase
         end
         out
       end
-
+      
+      # convert stable coin to fiat
+      def convert from, to, amt
+        params = {
+          from:   from,
+          to:     to,
+          amount: amt
+        }
+        
+        out = nil
+        post("/conversions", params) do |resp|
+          out = response_object(resp)
+          yield(out, resp) if block_given?
+        end
+        out
+      end
+      
       def payment_methods(params = {})
         out = nil
         get("/payment-methods", params, paginate: true) do |resp|
