@@ -295,6 +295,27 @@ module Coinbase
         end
         out
       end
+      
+      # get a deposit address for crypto
+      def get_deposit_address coin:nil, id: nil
+        if !id and coin
+          aa = coinbase_accounts
+          if acct = aa.find do |a| a.currency == coin.to_s end
+            id = acct.id
+          end
+        elsif id
+        
+        else
+          raise ArgumentError.new("Must pass coin SYM or account id")
+        end
+        
+        out = nil
+        post("/coinbase-accounts/#{id}/addresses") do |resp|
+          out = response_object(resp)
+          yield(out, resp) if block_given?
+        end
+        out
+      end 
 
       private
 
