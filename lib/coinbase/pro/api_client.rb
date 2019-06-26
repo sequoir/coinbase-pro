@@ -254,6 +254,19 @@ module Coinbase
         out
       end
 
+      def coinbase_deposit(amount, currency, coinbase_account_id, params = {})
+        params[:amount] = amount
+        params[:currency] = currency
+        params[:coinbase_account_id] = coinbase_account_id
+         out = nil
+        post("/deposits/coinbase-account", params) do |resp|
+          out = response_object(resp)
+          yield(out, resp) if block_given?
+        end
+        out
+      end
+      
+      
       def coinbase_withdrawal(amount, currency, coinbase_account_id, params = {})
         params[:amount] = amount
         params[:currency] = currency
