@@ -4,7 +4,7 @@ module Coinbase
     class Websocket
       def initialize(options = {})
         @ws_url = options[:ws_url] || "wss://ws-feed.pro.coinbase.com"
-        @product = options[:product_id] || 'BTC-USD'
+        @product = options[:product_id] || ['BTC-USD', 'ETH-USD', 'LTC-USD', 'ETH-BTC', 'LTC-BTC', 'BCH-USD', 'BCH-BTC', 'ETC-BTC', 'ETC-USD', 'ZRX-BTC']
         @keepalive = options[:keepalive] || false
 
         @message_cb = ->(_data) { nil }
